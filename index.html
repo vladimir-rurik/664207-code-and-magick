@@ -182,6 +182,8 @@
 </template>
 
 <script>
+'use strict';
+
   /**
   * переменная которая будет управлять размером фаербола в пикселях
   * @type {number}
@@ -232,10 +234,10 @@
    * @return {number} положение по вертикали
    */
   var getWizardY = function (height) {
-    return height/3 - getWizardHeight()/2;
+    return height/3 - getWizardHeight();
   };
 </script>
-
+<script src="js/stat.js"></script>
 <script src="js/game.js"></script>
 
 </body>
