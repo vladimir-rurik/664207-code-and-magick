@@ -182,25 +182,60 @@
 </template>
 
 <script>
+  /**
+  * переменная которая будет управлять размером фаербола в пикселях
+  * @type {number}
+  */
   var fireballSize = 22;
-  var getFireballSpeed = function(left){
-    if(left){
-      return 5;
-    }
-    return 2;
+
+  /**
+   * получение скорости фаербола в зависимости от направления ветра в игре
+   * @param {boolean} left - направление полёта фаербола, если параметр left — true, то фаербол летит по ветру
+   * @return {number} скорость фаербола
+   */
+  var getFireballSpeed = function (left) {
+    return left ? 5 : 2;
   };
+
+  /**
+  * скорость мага
+  * @type {number}
+  */
   var wizardSpeed = 3;
+
+  /**
+  * ширина мага
+  * @type {number}
+  */
   var wizardWidth = 70;
-  var getWizardHeight = function(){
+
+  /**
+   * получение пропорциональной высоты мага в зависимости от его ширины
+   * @return {number} высота мага
+   */
+  var getWizardHeight = function () {
     return 1.337 * wizardWidth;
   };
-  var getWizardX = function(width){
-    return width/2;
+
+  /**
+   * получение положения мага по горизонтали
+   * @param {number} width - ширина игровой области
+   * @return {number} положение по горизонтали
+   */
+  var getWizardX = function (width) {
+    return width/2 - wizardWidth/2;
   };
-  var getWizardY = function(height){
-    return height/3;
+
+  /**
+   * получение положения мага по вертикали
+   * @param {number} width - высота игровой области
+   * @return {number} положение по вертикали
+   */
+  var getWizardY = function (height) {
+    return height/3 - getWizardHeight()/2;
   };
 </script>
+
 <script src="js/game.js"></script>
 
 </body>
