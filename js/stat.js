@@ -41,16 +41,16 @@
    * @param {Array} arr - исходный массив
    * @return {number} максимальный элемент
    */
-  var getMaxElement = function (arr) {
-    var maxElement = arr[0];
+  var getMaxValue = function (arr) {
+    var MaxValue = arr[0];
 
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] > maxElement) {
-        maxElement = arr[i];
+    for (var i = 1; i < arr.length; i++) {
+      if (arr[i] > MaxValue) {
+        MaxValue = arr[i];
       }
     }
 
-    return maxElement;
+    return MaxValue;
   };
 
   /** функция отрисовки строки приветствия
@@ -63,6 +63,27 @@
     ctx.fillStyle = '#000';
     ctx.font = TEXT_FONT;
     ctx.fillText(text, x, y);
+  };
+
+  /** функция получения цвета с рандомной прозрачностью
+   * @param {Array} names
+   * @param {number} index
+   * @return {string} bar color
+   */
+  var getBarColor = function (names, index) {
+    return names[index] === USER_NAME ? USER_DEFAULT_COLOR : OTHER_DEFAULT_COLOR_TEMPLATE.replace('{0}', Math.random().toFixed(2));
+  };
+
+  /** функция отрисовки гистограммы
+   * @param {Canvas} ctx
+   * @param {Array} names
+   * @param {number} index
+   * @param {number} x
+   * @param {number} height
+   */
+  var renderColumn = function (ctx, names, index, x, height) {
+    ctx.fillStyle = getBarColor(names, index);
+    ctx.fillRect(x, COLUMN_BLOCK_Y - (height + GAP * 2), BAR_WIDTH, height);
   };
 
   /**
@@ -79,24 +100,13 @@
     writeText(ctx, 'Ура вы победили!', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 3);
     writeText(ctx, 'Список результатов:', CLOUD_X + GAP * 2, CLOUD_Y + GAP * 5);
 
-    var maxTime = getMaxElement(times);
+    var maxTime = getMaxValue(times);
 
     for (var i = 0; i < names.length; i++) {
       var columnHeight = (BAR_HEIGHT * times[i].toFixed(0)) / maxTime;
 
-      // функция получения цвета с рандомной прозрачностью
-      var getBarColor = function () {
-        return names[i] === USER_NAME ? USER_DEFAULT_COLOR : OTHER_DEFAULT_COLOR_TEMPLATE.replace('{0}', Math.random().toFixed(2));
-      };
-
-      // функция отрисовки гистограммы
-      var renderColumn = function (x, height) {
-        ctx.fillStyle = getBarColor();
-        ctx.fillRect(x, COLUMN_BLOCK_Y - (columnHeight + GAP * 2), BAR_WIDTH, height);
-      };
-
       writeText(ctx, times[i].toFixed(0), COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y - (columnHeight + GAP * 3));
-      renderColumn(COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, columnHeight);
+      renderColumn(ctx, names, i, COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, columnHeight);
       writeText(ctx, names[i], COLUMN_BLOCK_X + (BAR_GAP + BAR_WIDTH) * i, COLUMN_BLOCK_Y);
     }
   };
