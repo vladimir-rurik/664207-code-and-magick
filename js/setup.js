@@ -14,7 +14,7 @@
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
 
   /** функция выбора случайного элемента массива
-   * @param {Array} arr
+   * @param {Array} arr - исходный массив
    * @return {string} arr[random]
    */
   var randomArrItem = function (arr) {
@@ -40,7 +40,7 @@
   };
 
   /** функция заполнения DOM объекта свойствами объекта волшебника
-   * @param {Wizard} wizard
+   * @param {Wizard} wizard - объект исходного волшебника
    * @return {DOMobject} wizardElement
    */
   var fillrWizard = function (wizard) {
