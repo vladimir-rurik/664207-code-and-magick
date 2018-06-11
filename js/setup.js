@@ -2,6 +2,7 @@
 
 (function () {
 
+  var WIZARD_COUNT = 4;
   var WIZARD_FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var WIZARD_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
@@ -23,12 +24,13 @@
   };
 
   /** функция возвращающая массив волшебников
+   * @param {number} wizardCount - кол-во волшебников
    * @return {Array} wizards
    */
-  var getWizards = function () {
+  var getWizards = function (wizardCount) {
     var wizards = [];
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < wizardCount; i++) {
       wizards[i] =
         {
           name: randomArrItem(WIZARD_FIRST_NAMES) + ' ' + randomArrItem(WIZARD_LAST_NAMES),
@@ -43,7 +45,7 @@
    * @param {Wizard} wizard - объект исходного волшебника
    * @return {DOMobject} wizardElement
    */
-  var fillrWizard = function (wizard) {
+  var fillWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -53,12 +55,12 @@
     return wizardElement;
   };
 
-  var wizards = getWizards();
-
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < wizards.length; i++) {
-    fragment.appendChild(fillrWizard(wizards[i]));
-  }
+
+  getWizards(WIZARD_COUNT).forEach(function (wizard) {
+    fragment.appendChild(fillWizard(wizard));
+  });
+
   similarListElement.appendChild(fragment);
 
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
