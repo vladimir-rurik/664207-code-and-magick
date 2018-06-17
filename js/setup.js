@@ -227,7 +227,7 @@ var changeCoatColor = function () {
   coatColorIndex = getNextIndex(COAT_COLORS, coatColorIndex);
   coatColorValue = COAT_COLORS[coatColorIndex];
 
-  setupWizardCoat.style.background = coatColorValue;
+  setupWizardCoat.style.fill = coatColorValue;
   coatColorField.value = coatColorValue;
 };
 
