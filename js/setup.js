@@ -76,6 +76,8 @@ var setupUserName = setupWindow.querySelector('.setup-user-name');
 var setupWizard = setupWindow.querySelector('.setup-wizard');
 var setupWizardEyes = setupWizard.querySelector('.wizard-eyes');
 var eyesColorField = setupWindow.querySelector('[name=eyes-color]');
+var setupWizardCoat = setupWizard.querySelector('.wizard-coat');
+var coatColorField = setupWindow.querySelector('[name=coat-color]');
 var setupFireball = setupWindow.querySelector('.setup-fireball-wrap');
 var fireballColorField = setupFireball.querySelector('[name=fireball-color]');
 var setupSimilar = setupWindow.querySelector('.setup-similar');
@@ -86,6 +88,8 @@ var eyesColorValue = eyesColorField.value;
 var eyesColorIndex = EYES_COLORS.indexOf(eyesColorValue);
 var fireballColorValue = fireballColorField.value;
 var fireballColorIndex = FIREBALL_COLORS.indexOf(fireballColorValue);
+var coatColorValue = coatColorField.value;
+var coatColorIndex = COAT_COLORS.indexOf(coatColorValue);
 
 var similarWizards = [];
 
@@ -154,9 +158,9 @@ var renderWizard = function (wizard, wizardTemplate) {
  */
 var renderElements = function (dataList, parentElement, template, renderItem) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < dataList.length; i++) {
-    fragment.appendChild(renderItem(dataList[i], template));
-  }
+  dataList.forEach(function (data) {
+    fragment.appendChild(renderItem(data, template));
+  });
   parentElement.appendChild(fragment);
 };
 
@@ -217,6 +221,17 @@ var changeFireballColor = function () {
 };
 
 /**
+ * Функция, меняющая цвет мантии по порядку.
+ */
+var changeCoatColor = function () {
+  coatColorIndex = getNextIndex(COAT_COLORS, coatColorIndex);
+  coatColorValue = COAT_COLORS[coatColorIndex];
+
+  setupWizardCoat.style.background = coatColorValue;
+  coatColorField.value = coatColorValue;
+};
+
+/**
  * Обработчик клика по аватарке
  */
 var openSetupClickHandler = function () {
@@ -225,6 +240,7 @@ var openSetupClickHandler = function () {
 
 /**
  * Обработчик нажатия клавиши ENTER на аватарке
+ * @param {Event} evt
  */
 var openSetupEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
@@ -234,6 +250,7 @@ var openSetupEnterPressHandler = function (evt) {
 
 /**
  * Обработчик нажатия клавиши ESC при открытом окне настроек.
+ * @param {Event} evt
  */
 var setupWindowEscPressHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== setupUserName) {
@@ -267,4 +284,9 @@ setupWizardEyes.addEventListener('click', function () {
 // Выбор цвета фаербола
 setupFireball.addEventListener('click', function () {
   changeFireballColor();
+});
+
+// Выбор цвета мантии
+setupWizardCoat.addEventListener('click', function () {
+  changeCoatColor();
 });
