@@ -122,6 +122,14 @@
   var TEXT_COLOR = 'rgba(0, 0, 0, 1)';
 
   /**
+   * Метод, возвращающий размер впадин облака
+   * @return {number}
+   */
+  var getDeflection = function () {
+    return window.cloud.CLOUD_DEFLECTION;
+  };
+
+  /**
    * Цвет колонки пользователя 'Вы'
    * @const
    * @type {string}
@@ -173,12 +181,12 @@
    */
   window.renderStatistics = function (ctx, names, times) {
     // Внутренние отступы
-    var cloudPaddingX = (CLOUD_WIDTH - (BAR_WIDTH + BAR_MARGIN) * names.length + BAR_MARGIN) / 2 - window.cloud.getDeflection();
-    var cloudPaddingY = (CLOUD_HEIGHT - window.cloud.getDeflection() * 2 - TEXT_HEIGHT * 4 - BAR_MAX_HEIGHT) / 2;
+    var cloudPaddingX = (CLOUD_WIDTH - (BAR_WIDTH + BAR_MARGIN) * names.length + BAR_MARGIN) / 2 - getDeflection();
+    var cloudPaddingY = (CLOUD_HEIGHT - getDeflection() * 2 - TEXT_HEIGHT * 4 - BAR_MAX_HEIGHT) / 2;
 
     // Координаты содержимого
-    var contentX = CLOUD_X + window.cloud.getDeflection() + cloudPaddingX;
-    var contentY = CLOUD_Y + window.cloud.getDeflection() + cloudPaddingY;
+    var contentX = CLOUD_X + getDeflection() + cloudPaddingX;
+    var contentY = CLOUD_Y + getDeflection() + cloudPaddingY;
 
     window.cloud.render(ctx, CLOUD_X + CLOUD_SHIFT, CLOUD_Y + CLOUD_SHIFT, CLOUD_WIDTH, CLOUD_HEIGHT, CLOUD_SHADOW_COLOR);
     window.cloud.render(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, CLOUD_COLOR);

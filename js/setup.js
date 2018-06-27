@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
-  var setupWindow = window.dialog.getElement();
-  var setupWizard = setupWindow.querySelector('.setup-wizard');
+  var setupForm = window.dialog.getElement().querySelector('.setup-wizard-form');
+  var setupWizard = setupForm.querySelector('.setup-wizard');
   var setupWizardEyes = setupWizard.querySelector('.wizard-eyes');
-  var eyesColorField = setupWindow.querySelector('[name=eyes-color]');
-  var setupFireball = setupWindow.querySelector('.setup-fireball-wrap');
+  var eyesColorField = setupForm.querySelector('[name=eyes-color]');
+  var setupFireball = setupForm.querySelector('.setup-fireball-wrap');
   var fireballColorField = setupFireball.querySelector('[name=fireball-color]');
   var setupWizardCoat = setupWizard.querySelector('.wizard-coat');
-  var coatColorField = setupWindow.querySelector('[name=coat-color]');
+  var coatColorField = setupForm.querySelector('[name=coat-color]');
 
   var eyesColors = window.wizard.getEyesColors();
   var fireballColors = window.wizard.getFireballColors();
@@ -52,7 +52,7 @@
     fireballColorField.value = fireballColorValue;
   };
 
-  /**
+    /**
    * Функция, меняющая цвет мантии по порядку.
    */
   var changeCoatColor = function () {
@@ -61,6 +61,10 @@
 
     setupWizardCoat.style.fill = coatColorValue;
     coatColorField.value = coatColorValue;
+  };
+
+  var loadHandler = function () {
+    window.dialog.close();
   };
 
   // Выбор цвета глаз
@@ -76,5 +80,15 @@
   // Выбор цвета мантии
   setupWizardCoat.addEventListener('click', function () {
     changeCoatColor();
+  });
+
+  // Отправка данных на сервер
+  setupForm.addEventListener('submit', function (evt) {
+    var errorElement = document.querySelector('.error');
+    if (errorElement) {
+      errorElement.remove();
+    }
+    window.backend.save(new FormData(setupForm), loadHandler, window.util.showError);
+    evt.preventDefault();
   });
 })();

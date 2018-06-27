@@ -1,21 +1,15 @@
 'use strict';
 
 (function () {
-  /**
-   * Размер впадин облака
-   * @const
-   * @type {number}
-   */
-  var CLOUD_DEFLECTION = 18;
 
   window.cloud = {
+
     /**
-     * Метод, возвращающий размер впадин облака
-     * @return {number}
+     * Размер впадин облака
+     * @const
+     * @type {number}
      */
-    getDeflection: function () {
-      return CLOUD_DEFLECTION;
-    },
+    CLOUD_DEFLECTION: 18,
 
     /**
      * Метод, отрисовывающий облако.
@@ -35,18 +29,18 @@
       var points = [
         {
           x: startX + width * 0.7,
-          y: startY + CLOUD_DEFLECTION
+          y: startY + window.cloud.CLOUD_DEFLECTION
         },
         {
-          x: endX - CLOUD_DEFLECTION,
+          x: endX - window.cloud.CLOUD_DEFLECTION,
           y: startY + height * 0.4
         },
         {
           x: startX + width * 0.6,
-          y: endY - CLOUD_DEFLECTION
+          y: endY - window.cloud.CLOUD_DEFLECTION
         },
         {
-          x: startX + CLOUD_DEFLECTION,
+          x: startX + window.cloud.CLOUD_DEFLECTION,
           y: startY + height * 0.5
         }
       ];
